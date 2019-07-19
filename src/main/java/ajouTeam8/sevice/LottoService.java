@@ -20,6 +20,9 @@ public class LottoService {
         System.out.println("구입할 로또 개수를 입력해 주세요");
         int purchase = scan.nextInt();
         int count = purchase;
+        if(count <= 0){
+            throw new IllegalArgumentException();
+        }
         System.out.println((count) + "개를 구매했습니다.");
 
         scan.nextLine();
