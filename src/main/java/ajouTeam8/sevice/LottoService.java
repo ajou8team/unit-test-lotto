@@ -29,14 +29,14 @@ public class LottoService {
         return count;
     }
 
-    public static List<Integer> CreateNum(int randomCount) {
+    private static List<Integer> CreateNum() {
         Random random = new Random();
         ArrayList<Integer> ListNum = new ArrayList<>();
         int num = 0;
 
         while (ListNum.size() < 6) {
             num = random.nextInt(lottoNumBound) + 1;
-            ListNum.remove((Integer) num);
+            ListNum.remove((Integer)num);
             ListNum.add(num);
         }
         return ListNum;
@@ -46,7 +46,7 @@ public class LottoService {
         List<Integer> UserNum = new ArrayList<>();
         ArrayList<Lotto> lottoList = new ArrayList<>();
         for (int i = 0; i < gameCount; i++) {
-            UserNum = CreateNum(lottoCountBound);
+            UserNum = CreateNum();
             System.out.println(UserNum);
             lottoList.add(new Lotto(UserNum));
         }
@@ -62,6 +62,9 @@ public class LottoService {
         for (String s : LottoNum) {
             int tmp = Integer.valueOf(s);
             winningNum.add(tmp);
+            if(winningNum.contains(tmp)){
+                throw new IllegalArgumentException();
+            }
         }
         Lotto winningLotto = new Lotto(winningNum);
         return winningLotto;
