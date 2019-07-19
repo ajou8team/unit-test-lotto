@@ -22,9 +22,7 @@ public class App
 
         gameCount = LottoService.getPurchaseLottoNum();
         userLotto_list = LottoService.generateLottoList(gameCount);
-        lastWinningLotto = LottoService.getLastWinningNum();
-        bonusNum = LottoService.getBonusNum();
-        WinningLotto winningLotto = new WinningLotto(lastWinningLotto, bonusNum);
+        WinningLotto winningLotto = LottoService.getWinningLotto();
 
         winStates = LottoService.calculateWinning(winningLotto, userLotto_list, gameCount);
         LottoService.printResult(winStates, gameCount);

@@ -53,7 +53,11 @@ public class LottoService {
         return lottoList;
     }
 
-    public static Lotto getLastWinningNum() {
+    public static WinningLotto getWinningLotto(){
+        return new WinningLotto(getLastWinningNum(), getBonusNum());
+    }
+
+    private static Lotto getLastWinningNum() {
         Scanner scan = new Scanner(System.in);
 
         List<Integer> winningNum = new ArrayList<>();
@@ -62,19 +66,22 @@ public class LottoService {
         for (String s : LottoNum) {
             int tmp = Integer.valueOf(s);
             winningNum.add(tmp);
-            if(winningNum.contains(tmp)){
+            if(winningNum.contains(tmp) || isValidNum(tmp)){
                 throw new IllegalArgumentException();
             }
         }
-        Lotto winningLotto = new Lotto(winningNum);
-        return winningLotto;
+        return new Lotto(winningNum);
     }
 
-    public static int getBonusNum() {
+    private static int getBonusNum() {
         Scanner scan = new Scanner(System.in);
         System.out.println("보너스 볼을 입력해주세요.");
         return scan.nextInt();
     }
+
+   private static boolean isValidNum(int tmp){
+        return (tmp > 0 && tmp < lottoCountBound);
+   }
 
     public static int[] calculateWinning(WinningLotto winningLotto, List<Lotto> userLotto_list, int gameCount) {
         int[] winStates = {0, 0, 0, 0, 0, 0};
